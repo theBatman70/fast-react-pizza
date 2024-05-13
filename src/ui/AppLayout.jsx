@@ -9,9 +9,9 @@ function AppLayout() {
   const isLoading = navigation.state === "loading";
   return (
     <div className="layout">
-      {isLoading && <Loader />}
       <Header />
       <SearchOrder />
+      {isLoading && <Loader />}
       <main>
         <Outlet />
       </main>
