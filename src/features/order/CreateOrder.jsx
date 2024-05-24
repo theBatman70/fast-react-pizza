@@ -28,6 +28,7 @@ function CreateOrder() {
     status: addressStatus,
     address,
     position,
+    error: addressError,
   } = useSelector((state) => state.user);
   const isLoadingAddress = addressStatus === "loading";
   const cart = useSelector(getCart);
@@ -64,6 +65,15 @@ function CreateOrder() {
 
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">Phone number</label>
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.longitude
+                ? `${position.latitude},${position.longitude}`
+                : ""
+            }
+          />
           <div className="sm:grow">
             <input
               type="tel"
@@ -89,9 +99,14 @@ function CreateOrder() {
               className="input w-full"
               defaultValue={address}
             />
+            {addressError ? (
+              <p className="rounded-md bg-red-100 p-2 text-xs text-red-700">
+                {addressError}
+              </p>
+            ) : null}
           </div>
           {!position.latitude && !position.longitude && (
-            <span className="absolute right-[3px]">
+            <span className="absolute right-[3px] top-[35px] sm:top-[3px]">
               <Button
                 onClick={handleGetAddress}
                 disabled={isLoadingAddress}
